@@ -3,28 +3,319 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Dr. Organic Vermicompost Farm - India's finest vermicompost, earthworms & organic farming training by Dr. Sharvan Kumar Yadav, Jaipur, Rajasthan. 10 National Awards, 20,000+ farmers trained.">
-  <meta name="keywords" content="vermicompost, organic farming, earthworms, vermiwash, Jaipur, Rajasthan, organic fertilizer, Dr Sharvan Yadav, ICAR">
+  <meta name="description" content="Dr. Organic Vermicompost Farm — India's finest organic vermicompost, earthworms & training by Dr. Sharvan Kumar Yadav. 10 National Awards. 20,000+ farmers trained.">
   <title>Dr. Organic Vermicompost Farm | Dr. Sharvan Kumar Yadav</title>
-  <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Sans+Devanagari:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --ink:#0d0a06;--soil:#1a1208;--bark:#3d2010;--earth:#6b3e1a;
+      --moss:#2d4a1a;--leaf:#4a7a28;--sprout:#78b832;--lime:#a8d44a;
+      --cream:#f5edd8;--wheat:#d4b87a;--gold:#c49030;--white:#fdfaf4;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);overflow-x:hidden;cursor:none}
+    .hi{font-family:'Noto Sans Devanagari',sans-serif}
+    .serif{font-family:'Cormorant Garamond',serif}
+
+    /* CURSOR */
+    #cursor{position:fixed;width:10px;height:10px;background:var(--sprout);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference}
+    #cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(168,212,74,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .12s ease}
+
+    /* BG CANVAS */
+    #bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;transition:all .4s}
+    nav.solid{background:rgba(13,10,6,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(120,184,50,.15)}
+    .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .nav-logo-mark{width:40px;height:40px;background:linear-gradient(135deg,var(--sprout),var(--lime));border-radius:12px 12px 4px 12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 20px rgba(120,184,50,.4);flex-shrink:0}
+    .nav-logo-text b{color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;display:block;line-height:1.2}
+    .nav-logo-text span{color:var(--sprout);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:300}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{color:rgba(245,237,216,.65);text-decoration:none;font-size:13px;letter-spacing:.5px;transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--sprout)}
+    .nav-wa{display:flex;align-items:center;gap:8px;background:#25D366;color:white;border:none;padding:9px 20px;border-radius:24px;font-size:13px;font-weight:500;cursor:none;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.35);transition:transform .2s,box-shadow .2s}
+    .nav-wa:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,211,102,.5)}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:4px}
+    .hamburger span{width:24px;height:2px;background:var(--cream);border-radius:2px;transition:all .3s;display:block}
+
+    /* HERO */
+    #hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+    #heroCanvas{position:absolute;inset:0;z-index:1;width:100%;height:100%}
+    .hero-content{position:relative;z-index:2;width:100%;max-width:1300px;margin:0 auto;padding:100px 5% 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(120,184,50,.35);background:rgba(120,184,50,.08);padding:6px 16px;border-radius:30px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:1.4rem;animation:fadeUp .8s both}
+    .hero-eyebrow .dot{width:6px;height:6px;background:var(--sprout);border-radius:50%;animation:pulse2 2s infinite}
+    @keyframes pulse2{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+    .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);line-height:1.0;font-weight:600;margin-bottom:1rem;animation:fadeUp .8s .1s both}
+    .hero-h1 .lw{color:var(--cream);display:block}
+    .hero-h1 .lg{color:var(--sprout);display:block;font-style:italic}
+    .hero-h1 .lo{color:var(--gold);display:block}
+    .hero-sub-hi{font-family:'Noto Sans Devanagari',sans-serif;font-size:1rem;color:var(--wheat);margin-bottom:1rem;opacity:.85;animation:fadeUp .8s .2s both}
+    .hero-desc{font-size:15px;color:rgba(245,237,216,.6);line-height:1.85;max-width:480px;margin-bottom:2.2rem;animation:fadeUp .8s .3s both}
+    .hero-stats{display:flex;gap:2rem;margin-bottom:2.2rem;animation:fadeUp .8s .4s both}
+    .hs-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--sprout);line-height:1;display:block}
+    .hs-lbl{font-size:11px;color:rgba(245,237,216,.5);margin-top:2px}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s .5s both}
+    .btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--sprout);color:var(--ink);border:none;padding:14px 30px;border-radius:6px;font-size:14px;font-weight:500;cursor:none;text-decoration:none;transition:transform .2s,box-shadow .2s;letter-spacing:.3px}
+    .btn-p:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(120,184,50,.5)}
+    .btn-g{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--cream);border:1px solid rgba(245,237,216,.25);padding:14px 30px;border-radius:6px;font-size:14px;cursor:none;text-decoration:none;transition:all .2s}
+    .btn-g:hover{border-color:var(--sprout);color:var(--sprout)}
+
+    /* WORM CANVAS */
+    .hero-right{display:flex;justify-content:center;align-items:center;position:relative;animation:fadeUp .8s .3s both}
+    #wormHeroCanvas{width:460px;height:460px;border-radius:50%;filter:drop-shadow(0 0 60px rgba(120,184,50,.25))}
+    .founder-pill{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;background:rgba(13,10,6,.88);border:1px solid rgba(120,184,50,.3);border-radius:50px;padding:10px 20px 10px 10px;backdrop-filter:blur(12px);white-space:nowrap}
+    .fp-img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--sprout);flex-shrink:0}
+    .fp-n{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);font-weight:600;display:block}
+    .fp-t{font-size:11px;color:var(--sprout);letter-spacing:.5px;display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+    /* SCROLL IND */
+    .scroll-ind{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUp 1s .9s both}
+    .scroll-ind span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,237,216,.35)}
+    .scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--sprout));animation:sDown 2s infinite}
+    @keyframes sDown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+    /* STATS BAND */
+    .stats-band{position:relative;z-index:3;background:linear-gradient(90deg,var(--bark),#2a1a08,var(--bark));border-top:1px solid rgba(120,184,50,.12);border-bottom:1px solid rgba(120,184,50,.12);padding:1.8rem 5%;display:grid;grid-template-columns:repeat(5,1fr)}
+    .sb-item{text-align:center;padding:0 1rem;border-right:1px solid rgba(245,237,216,.06)}
+    .sb-item:last-child{border-right:none}
+    .sb-icon{font-size:1.4rem;margin-bottom:4px;display:block}
+    .sb-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--sprout);display:block;line-height:1}
+    .sb-lbl{font-size:11px;color:var(--wheat);opacity:.7;margin-top:4px;display:block}
+
+    /* SECTIONS */
+    .sec{padding:6rem 0;position:relative;z-index:2}
+    .sec-inner{max-width:1300px;margin:0 auto;padding:0 5%}
+    .sec-eyebrow{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--sprout);margin-bottom:.8rem}
+    .sec-eyebrow::before{content:'';width:30px;height:1px;background:var(--sprout)}
+    .sec-h{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.1;margin-bottom:.4rem}
+    .sec-hi{font-family:'Noto Sans Devanagari',sans-serif;color:var(--wheat);font-size:.95rem;margin-bottom:2rem;opacity:.8}
+
+    /* FARMING 3D CARDS */
+    #farming-sec{background:linear-gradient(180deg,var(--ink) 0%,#0a1503 50%,var(--ink) 100%)}
+    .farming-intro{text-align:center;max-width:700px;margin:0 auto 4rem;padding:0 5%}
+    .farming-intro .sec-eyebrow{justify-content:center}
+    .farming-intro .sec-eyebrow::before{display:none}
+    .farm-grid{display:grid;grid-template-columns:1fr 1fr 1fr}
+    .f3d{position:relative;overflow:hidden;cursor:none;border:1px solid rgba(120,184,50,.07);transition:z-index 0s}
+    .f3d:hover{z-index:10}
+    .f3d-cw{width:100%;aspect-ratio:1;position:relative}
+    .f3d-cw canvas{width:100%!important;height:100%!important;display:block}
+    .f3d-info{position:absolute;bottom:0;left:0;right:0;padding:2rem;background:linear-gradient(to top,rgba(0,0,0,.93) 0%,rgba(0,0,0,.55) 50%,transparent 100%);transform:translateY(32%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
+    .f3d:hover .f3d-info{transform:translateY(0)}
+    .f3d-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:.5rem;display:block}
+    .f3d-name{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--cream);margin-bottom:.3rem;line-height:1.1}
+    .f3d-hi{font-family:'Noto Sans Devanagari',sans-serif;font-size:.85rem;color:var(--wheat);margin-bottom:.8rem;opacity:.8}
+    .f3d-desc{font-size:13px;color:rgba(245,237,216,.7);line-height:1.7;opacity:0;transform:translateY(14px);transition:opacity .4s .1s,transform .4s .1s}
+    .f3d:hover .f3d-desc{opacity:1;transform:translateY(0)}
+    .f3d-cta{display:inline-flex;align-items:center;gap:6px;margin-top:1rem;background:#25D366;color:white;padding:9px 18px;border-radius:4px;font-size:12px;font-weight:500;text-decoration:none;cursor:none;opacity:0;transform:translateY(8px);transition:opacity .4s .15s,transform .4s .15s}
+    .f3d:hover .f3d-cta{opacity:1;transform:translateY(0)}
+
+    /* SCROLL STORY */
+    #scroll-story{position:relative;background:var(--ink)}
+    .story-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    #storyCanvas{position:absolute;inset:0;width:100%;height:100%}
+    .story-panels{position:relative;z-index:2;width:100%;max-width:1300px;margin:0 auto;padding:0 5%;pointer-events:none}
+    .sp{max-width:500px;opacity:0;transform:translateX(-40px);transition:opacity .6s,transform .6s;pointer-events:none}
+    .sp.active{opacity:1;transform:translateX(0)}
+    .sp.right{margin-left:auto;transform:translateX(40px)}
+    .sp.right.active{transform:translateX(0)}
+    .sp-num{font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:700;color:rgba(120,184,50,.1);line-height:1;margin-bottom:-.5rem}
+    .sp-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sprout);margin-bottom:.6rem;display:block}
+    .sp-h{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--cream);line-height:1.15;margin-bottom:.8rem}
+    .sp-hi{font-family:'Noto Sans Devanagari',sans-serif;font-size:.9rem;color:var(--wheat);margin-bottom:1rem;opacity:.8}
+    .sp-desc{font-size:14px;color:rgba(245,237,216,.65);line-height:1.85}
+    .sp-stats{display:flex;gap:1.5rem;margin-top:1.2rem}
+    .sp-snum{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--sprout);font-weight:700;display:block;line-height:1}
+    .sp-slbl{font-size:11px;color:rgba(245,237,216,.5)}
+    .scroll-spacer{height:300vh}
+
+    /* PRODUCTS */
+    #products-sec{background:linear-gradient(180deg,var(--ink),#08120a,var(--ink))}
+    .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+    .prod-card{background:rgba(255,255,255,.03);border:1px solid rgba(120,184,50,.1);border-radius:16px;overflow:hidden;position:relative;transition:transform .4s,box-shadow .4s,border-color .4s}
+    .prod-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(120,184,50,.3);border-color:rgba(120,184,50,.4)}
+    .prod-cw{height:200px;position:relative;overflow:hidden}
+    .prod-cw canvas{width:100%!important;height:100%!important;display:block}
+    .prod-body{padding:1.5rem}
+    .prod-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sprout);margin-bottom:4px}
+    .prod-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--cream);margin-bottom:2px}
+    .prod-hi{font-family:'Noto Sans Devanagari',sans-serif;font-size:.8rem;color:var(--wheat);margin-bottom:.8rem;opacity:.7}
+    .prod-desc{font-size:13px;color:rgba(245,237,216,.6);line-height:1.7;margin-bottom:1rem}
+    .prod-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.2rem}
+    .ptag{font-size:11px;color:var(--lime);background:rgba(120,184,50,.1);border:1px solid rgba(120,184,50,.2);padding:3px 10px;border-radius:12px}
+    .prod-wa{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:#25D366;color:white;border:none;padding:11px;border-radius:8px;font-size:13px;font-weight:500;cursor:none;text-decoration:none;transition:transform .2s,box-shadow .2s}
+    .prod-wa:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,211,102,.4)}
+
+    /* FOUNDER */
+    #founder-sec{background:var(--ink);border-top:1px solid rgba(120,184,50,.08);border-bottom:1px solid rgba(120,184,50,.08)}
+    .founder-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .founder-frame{border-radius:16px;overflow:hidden;position:relative;aspect-ratio:4/5;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+    .founder-frame img{width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.05)}
+    .founder-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(13,10,6,.8) 0%,transparent 60%)}
+    .founder-cap{position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;z-index:2}
+    .fcap-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--cream);font-weight:600}
+    .fcap-title{font-size:12px;color:var(--sprout);letter-spacing:.5px;margin-top:2px}
+    .founder-badge{position:absolute;top:-20px;right:-20px;background:var(--moss);border:3px solid var(--ink);border-radius:12px;padding:1rem 1.2rem;text-align:center;box-shadow:0 15px 40px rgba(0,0,0,.4)}
+    .fb-num{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--lime);font-weight:700;line-height:1;display:block}
+    .fb-lbl{font-size:10px;color:rgba(255,255,255,.7);letter-spacing:1px;margin-top:2px;display:block}
+    .founder-text p{font-size:15px;color:rgba(245,237,216,.65);line-height:1.9;margin-bottom:1.2rem}
+    .founder-quote{border-left:3px solid var(--sprout);padding-left:1.5rem;margin:1.5rem 0}
+    .fq-text{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--cream);font-style:italic;line-height:1.5}
+    .f-awards{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem}
+    .faw{background:rgba(120,184,50,.1);border:1px solid rgba(120,184,50,.25);color:var(--lime);font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px}
+
+    /* TRAINING */
+    #training-sec{background:linear-gradient(160deg,#060f03,#0a1a05,#060f03)}
+    .tp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem}
+    .tp-item{border-radius:12px;overflow:hidden;position:relative;aspect-ratio:16/9;cursor:none}
+    .tp-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+    .tp-item:hover img{transform:scale(1.06)}
+    .tp-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:1.2rem}
+    .tp-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--cream);display:block}
+    .tp-sub{font-size:11px;color:var(--sprout);margin-top:2px;display:block}
+    .tc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .tc2{background:rgba(255,255,255,.03);border:1px solid rgba(120,184,50,.1);border-radius:14px;padding:2rem;position:relative;overflow:hidden;transition:all .3s}
+    .tc2::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--sprout),var(--lime));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+    .tc2:hover{border-color:rgba(120,184,50,.3);transform:translateY(-4px)}
+    .tc2:hover::before{transform:scaleX(1)}
+    .tc2-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
+    .tc2-price{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--lime);margin-bottom:.3rem}
+    .tc2-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--cream);margin-bottom:.3rem}
+    .tc2-hi{font-family:'Noto Sans Devanagari',sans-serif;font-size:.8rem;color:var(--wheat);opacity:.7;margin-bottom:.8rem}
+    .tc2-desc{font-size:13px;color:rgba(245,237,216,.6);line-height:1.7;margin-bottom:1rem}
+    .tc2-ul{list-style:none;margin-bottom:1.2rem}
+    .tc2-ul li{font-size:12px;color:rgba(245,237,216,.6);padding:4px 0;display:flex;align-items:center;gap:6px}
+    .tc2-ul li::before{content:'✓';color:var(--sprout);font-weight:700;flex-shrink:0}
+    .tc2-wa{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;background:#25D366;color:white;border:none;padding:11px;border-radius:6px;font-size:13px;font-weight:500;cursor:none;text-decoration:none;transition:all .2s}
+    .tc2-wa:hover{box-shadow:0 6px 20px rgba(37,211,102,.4)}
+
+    /* TESTIMONIALS MARQUEE */
+    #testimonials-sec{background:var(--ink)}
+    .test-wrap{overflow:hidden;margin-top:2.5rem}
+    .test-marquee{display:flex;gap:1.5rem;animation:marquee 30s linear infinite;width:max-content}
+    .test-marquee:hover{animation-play-state:paused}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .tcard{background:rgba(255,255,255,.03);border:1px solid rgba(120,184,50,.1);border-radius:12px;padding:1.5rem;width:320px;flex-shrink:0;transition:border-color .2s}
+    .tcard:hover{border-color:rgba(120,184,50,.3)}
+    .tcard-stars{color:var(--gold);font-size:13px;margin-bottom:.8rem}
+    .tcard-text{font-size:14px;color:rgba(245,237,216,.7);line-height:1.75;font-style:italic;margin-bottom:1rem}
+    .tcard-author{font-weight:500;font-size:13px;color:var(--cream)}
+    .tcard-from{font-size:11px;color:var(--sprout);margin-top:2px}
+
+    /* AWARDS */
+    #awards-sec{background:linear-gradient(180deg,var(--ink),#0a0802,var(--ink))}
+    .awards-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:2rem}
+    .award-cert{border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+    .award-cert img{width:100%;display:block}
+    .award-cert-cap{margin-top:1rem}
+    .award-cert-cap h4{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.1rem}
+    .award-cert-cap p{font-size:12px;color:var(--wheat);margin-top:4px;opacity:.8}
+    .awards-list{display:flex;flex-direction:column;gap:10px}
+    .aw-item{background:rgba(255,255,255,.04);border:1px solid rgba(201,160,48,.18);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:14px;transition:all .2s}
+    .aw-item:hover{border-color:rgba(201,160,48,.4);transform:translateX(5px)}
+    .aw-icon{font-size:1.8rem;flex-shrink:0}
+    .aw-name{font-size:14px;font-weight:700;color:var(--cream)}
+    .aw-org{font-size:11px;color:var(--wheat);opacity:.7;margin-top:2px}
+    .aw-year{margin-left:auto;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);font-weight:700;flex-shrink:0}
+
+    /* MEDIA */
+    #media-sec{background:var(--ink)}
+    .media-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+    .ml-item{background:rgba(255,255,255,.04);border:1px solid rgba(245,237,216,.07);border-radius:8px;padding:10px 18px;font-size:13px;color:rgba(245,237,216,.5);transition:all .2s;cursor:none}
+    .ml-item:hover{border-color:rgba(120,184,50,.3);color:var(--sprout);background:rgba(120,184,50,.06)}
+
+    /* CTA */
+    #cta-sec{background:radial-gradient(ellipse at 50% 0%,rgba(45,74,26,.45) 0%,transparent 70%),var(--ink);text-align:center;padding:7rem 5%}
+    #cta-sec .sec-h{color:var(--cream);max-width:700px;margin:0 auto .5rem}
+    .cta-sub{font-size:16px;color:rgba(245,237,216,.5);max-width:500px;margin:0 auto 2.5rem}
+    .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .cta-wa{display:inline-flex;align-items:center;gap:12px;background:#25D366;color:white;padding:16px 36px;border-radius:8px;font-size:16px;font-weight:500;text-decoration:none;cursor:none;box-shadow:0 8px 40px rgba(37,211,102,.4);transition:transform .2s,box-shadow .2s}
+    .cta-wa:hover{transform:translateY(-3px);box-shadow:0 15px 50px rgba(37,211,102,.5)}
+    .cta-info{display:flex;justify-content:center;gap:3rem;margin-top:3rem;flex-wrap:wrap}
+    .ci2-icon{font-size:1.5rem;margin-bottom:.4rem;display:block}
+    .ci2-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--sprout);display:block;margin-bottom:3px}
+    .ci2-val{font-size:14px;color:var(--cream)}
+    .ci2-val a{color:var(--cream);text-decoration:none}
+    .ci2-val a:hover{color:var(--sprout)}
+    .social-row{display:flex;justify-content:center;gap:12px;margin-top:2.5rem;flex-wrap:wrap}
+    .sr-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;cursor:none;transition:transform .2s}
+    .sr-btn:hover{transform:translateY(-2px)}
+    .sr-yt{background:#FF0000;color:white}
+    .sr-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white}
+    .sr-fb{background:#1877F2;color:white}
+    .sr-li{background:#0A66C2;color:white}
+
+    /* FLOAT WA */
+    .fwa{position:fixed;bottom:28px;right:28px;z-index:999;width:60px;height:60px;border-radius:50%;background:#25D366;color:white;display:flex;align-items:center;justify-content:center;text-decoration:none;cursor:none;box-shadow:0 6px 25px rgba(37,211,102,.5);animation:waPulse 2.5s ease-in-out infinite;transition:transform .3s}
+    .fwa:hover{transform:scale(1.12);animation:none}
+    .fwa-tip{position:absolute;right:72px;background:rgba(13,10,6,.95);border:1px solid rgba(120,184,50,.3);color:var(--cream);padding:6px 14px;border-radius:6px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+    .fwa:hover .fwa-tip{opacity:1}
+    @keyframes waPulse{0%,100%{box-shadow:0 6px 25px rgba(37,211,102,.5)}50%{box-shadow:0 6px 40px rgba(37,211,102,.7),0 0 0 10px rgba(37,211,102,.1)}}
+
+    /* FOOTER */
+    footer{background:var(--soil);border-top:1px solid rgba(120,184,50,.1);padding:4rem 5% 2rem}
+    .ft-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:3rem}
+    .ft-brand p{font-size:13px;color:rgba(245,237,216,.4);line-height:1.8;margin-top:.8rem;max-width:230px}
+    .ft-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--sprout);margin-bottom:1rem}
+    .ft-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+    .ft-col ul li a{color:rgba(245,237,216,.4);text-decoration:none;font-size:13px;transition:color .2s}
+    .ft-col ul li a:hover{color:var(--sprout)}
+    .ft-bot{border-top:1px solid rgba(245,237,216,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center}
+    .ft-copy{font-size:12px;color:rgba(245,237,216,.28)}
+    .ft-tag{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--sprout);font-style:italic}
+
+    /* REVEAL */
+    .rev{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+    .rev.vis{opacity:1;transform:translateY(0)}
+    .rev-l{opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease}
+    .rev-l.vis{opacity:1;transform:translateX(0)}
+    .rev-r{opacity:0;transform:translateX(40px);transition:opacity .8s ease,transform .8s ease}
+    .rev-r.vis{opacity:1;transform:translateX(0)}
+
+    /* MOBILE */
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .nav-links.open{display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(13,10,6,.98);padding:1.5rem 5%;gap:1.2rem;border-bottom:1px solid rgba(120,184,50,.15);z-index:999}
+      .hamburger{display:flex}
+      .nav-wa span{display:none}.nav-wa{padding:9px 12px}
+      .hero-content{grid-template-columns:1fr;padding-top:100px}
+      .hero-right{display:none}
+      .stats-band{grid-template-columns:repeat(3,1fr)}
+      .farm-grid{grid-template-columns:1fr}
+      .prod-grid{grid-template-columns:1fr}
+      .founder-grid{grid-template-columns:1fr}
+      .tp-grid{grid-template-columns:1fr}
+      .tc-grid{grid-template-columns:1fr}
+      .awards-grid{grid-template-columns:1fr}
+      .ft-top{grid-template-columns:1fr 1fr}
+      .ft-bot{flex-direction:column;gap:8px;text-align:center}
+      .cta-info{gap:1.5rem}
+    }
+  </style>
 </head>
 <body>
 
-<!-- FLOATING WHATSAPP -->
-<a class="float-wa" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20am%20interested%20in%20your%20vermicompost%20products%2Ftraining." target="_blank" title="WhatsApp Us">
-  <span class="float-wa-tooltip">Chat on WhatsApp</span>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="bgCanvas"></canvas>
+
+<!-- FLOAT WA -->
+<a class="fwa" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%20%F0%9F%99%8F%0AI%20found%20your%20website.%20Please%20guide%20me." target="_blank">
+  <div class="fwa-tip">WhatsApp Dr. Sharvan ji</div>
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
 <!-- NAV -->
 <nav id="mainNav">
   <a class="nav-logo" href="index.html">
-    <div class="logo-icon">🌿</div>
-    <div class="logo-text-wrap">
-      <div class="logo-main">Dr. Organic Vermicompost Farm</div>
-      <div class="logo-sub">Sundarpura, Jaipur · Est. 2020</div>
-    </div>
+    <div class="nav-logo-mark">🌿</div>
+    <div class="nav-logo-text"><b>Dr. Organic Vermicompost Farm</b><span>Sundarpura, Jaipur · Est. 2020</span></div>
   </a>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html" class="active">Home</a></li>
@@ -34,642 +325,317 @@
     <li><a href="gallery.html">Gallery</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <a class="nav-wa-btn" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20enquire%20about%20your%20farm." target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <div style="display:flex;align-items:center;gap:14px">
+    <a class="nav-wa" href="https://wa.me/916377544290" target="_blank">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       <span>WhatsApp</span>
     </a>
-    <div class="hamburger" id="hamburger" onclick="toggleNav()">
-      <span></span><span></span><span></span>
-    </div>
+    <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-bg-canvas">
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-    <div class="hero-orb hero-orb-3"></div>
-    <div class="hero-particles"></div>
-  </div>
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
   <div class="hero-content">
-    <div class="hero-left">
-      <div class="hero-badge">🏆 10 National Awards &nbsp;·&nbsp; ICAR Recognized</div>
-      <h1 class="serif">India's Finest<br><em>Organic</em><br><span class="line2">Vermicompost</span></h1>
-      <p class="hero-tagline hindi">भारत की सर्वश्रेष्ठ जैविक खाद — सीधे खेत से</p>
-      <p class="hero-desc">Pure premium vermicompost, live earthworms & vermiwash from Dr. Sharvan Kumar Yadav — Ph.D. Organic Farming, ICAR Researcher, Awarded by the Rajasthan Chief Minister. Trusted by 20,000+ farmers across India.</p>
-      <div class="hero-stats-row">
-        <div class="hero-stat">
-          <span class="hero-stat-num" data-count="20000">0</span>
-          <span class="hero-stat-lbl">Farmers Trained</span>
-        </div>
-        <div class="hero-stat-div"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">2800</span>
-          <span class="hero-stat-lbl">Active Beds</span>
-        </div>
-        <div class="hero-stat-div"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">1500T</span>
-          <span class="hero-stat-lbl">Annual Production</span>
-        </div>
-        <div class="hero-stat-div"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">15+</span>
-          <span class="hero-stat-lbl">Years Research</span>
-        </div>
+    <div>
+      <div class="hero-eyebrow"><span class="dot"></span>10 National Awards · ICAR Certified · 145K+ Followers</div>
+      <h1 class="hero-h1"><span class="lw">India's Finest</span><span class="lg">Organic</span><span class="lo">Vermicompost</span></h1>
+      <p class="hero-sub-hi hi">भारत की सर्वश्रेष्ठ जैविक खाद — मिट्टी को जीवन दो</p>
+      <p class="hero-desc">Pure premium vermicompost, live earthworms & vermiwash by Dr. Sharvan Kumar Yadav — Ph.D. Organic Farming, ICAR Researcher. 20,000+ farmers trained across India.</p>
+      <div class="hero-stats">
+        <div><span class="hs-num">20K+</span><span class="hs-lbl">Farmers Trained</span></div>
+        <div><span class="hs-num">2800</span><span class="hs-lbl">Active Beds</span></div>
+        <div><span class="hs-num">1500T</span><span class="hs-lbl">Annual Yield</span></div>
+        <div><span class="hs-num">2000</span><span class="hs-lbl">Worms/kg</span></div>
       </div>
       <div class="hero-btns">
-        <a class="btn-green" href="products.html">🛒 Our Products</a>
-        <a class="btn-ghost" href="training.html">📚 Free Training</a>
+        <a class="btn-p" href="products.html">🛒 Our Products</a>
+        <a class="btn-g" href="training.html">🎓 Free Training</a>
       </div>
     </div>
     <div class="hero-right">
-      <div class="hero-3d-scene">
-        <div class="scene-glow"></div>
-        <div class="leaf-3d leaf-3d-1">🍃</div>
-        <div class="leaf-3d leaf-3d-2">🌿</div>
-        <div class="leaf-3d leaf-3d-3">🍀</div>
-        <!-- 3D Soil Mound with Earthworms -->
-        <div class="soil-mound">
-          <div class="soil-texture"></div>
-          <div class="worm worm-1">
-            <div class="worm-body">
-              <div class="worm-head"></div>
-              <div class="worm-seg"></div><div class="worm-seg"></div><div class="worm-seg"></div><div class="worm-seg"></div>
-            </div>
-          </div>
-          <div class="worm worm-2">
-            <div class="worm-body">
-              <div class="worm-head"></div>
-              <div class="worm-seg"></div><div class="worm-seg"></div><div class="worm-seg"></div>
-            </div>
-          </div>
-          <div class="worm worm-3">
-            <div class="worm-body">
-              <div class="worm-head"></div>
-              <div class="worm-seg"></div><div class="worm-seg"></div><div class="worm-seg"></div><div class="worm-seg"></div>
-            </div>
-          </div>
-          <div class="worm worm-4">
-            <div class="worm-body">
-              <div class="worm-head"></div>
-              <div class="worm-seg"></div><div class="worm-seg"></div>
-            </div>
-          </div>
-        </div>
-        <div class="founder-photo-wrap">
-          <img class="founder-photo" id="founderImg" src="" alt="Dr. Sharvan Kumar Yadav">
-          <div class="founder-photo-label">Dr. Sharvan Kumar Yadav<span>Ph.D. Organic Farming</span></div>
-        </div>
-        <div class="particles-count">
-          <span class="pc-num">2000</span>
-          <span class="pc-lbl">Worms/kg</span>
-          <span class="pc-lbl" style="color: var(--lime); font-weight:700;">India's Highest</span>
-        </div>
+      <canvas id="wormHeroCanvas" width="460" height="460"></canvas>
+      <div class="founder-pill">
+        <img class="fp-img" id="founderPill" src="" alt="Dr. Sharvan Kumar Yadav">
+        <div><span class="fp-n">Dr. Sharvan Kumar Yadav</span><span class="fp-t">Ph.D. Organic Farming · ICAR</span></div>
       </div>
     </div>
   </div>
+  <div class="scroll-ind"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
-<!-- STATS BAND -->
+<!-- STATS -->
 <div class="stats-band">
-  <div class="stat-card reveal">
-    <span class="stat-icon">🌱</span>
-    <span class="stat-num">2800</span>
-    <span class="stat-lbl">Vermicompost Beds</span>
-  </div>
-  <div class="stat-card reveal">
-    <span class="stat-icon">🏆</span>
-    <span class="stat-num">10+</span>
-    <span class="stat-lbl">National Awards</span>
-  </div>
-  <div class="stat-card reveal">
-    <span class="stat-icon">👨‍🌾</span>
-    <span class="stat-num">20K+</span>
-    <span class="stat-lbl">Farmers Trained Free</span>
-  </div>
-  <div class="stat-card reveal">
-    <span class="stat-icon">🔬</span>
-    <span class="stat-num">15+</span>
-    <span class="stat-lbl">Years ICAR Research</span>
-  </div>
-  <div class="stat-card reveal">
-    <span class="stat-icon">📦</span>
-    <span class="stat-num">1500T</span>
-    <span class="stat-lbl">Annual Production</span>
-  </div>
+  <div class="sb-item"><span class="sb-icon">🛏️</span><span class="sb-num">2800</span><span class="sb-lbl">Vermicompost Beds</span></div>
+  <div class="sb-item"><span class="sb-icon">🏆</span><span class="sb-num">10+</span><span class="sb-lbl">National Awards</span></div>
+  <div class="sb-item"><span class="sb-icon">👨‍🌾</span><span class="sb-num">20K+</span><span class="sb-lbl">Farmers Trained Free</span></div>
+  <div class="sb-item"><span class="sb-icon">🔬</span><span class="sb-num">15+</span><span class="sb-lbl">Years ICAR Research</span></div>
+  <div class="sb-item"><span class="sb-icon">🪱</span><span class="sb-num">2000</span><span class="sb-lbl">Earthworms per kg</span></div>
 </div>
 
-<!-- ABOUT / STORY -->
-<div class="about-section">
-  <div class="about-grid">
-    <div class="about-imgs reveal">
-      <div class="about-img-main">
-        <img id="founderBigImg" src="" alt="Dr. Sharvan Kumar Yadav with earthworms">
-        <div class="icar-badge">📰 Published by ICAR</div>
-      </div>
-      <div class="about-img-side">
-        <img id="icarImg" src="" alt="ICAR Startup Story">
-      </div>
-      <div class="about-img-side">
-        <img id="awardImg" src="" alt="Organic Innovations Award">
-      </div>
-    </div>
-    <div class="story-text reveal">
-      <div class="section-label">Our Story / हमारी कहानी</div>
-      <h2 class="section-h serif">From 17 Beds to India's Largest Vermicompost Unit</h2>
-      <p class="section-hi hindi">एक सपने से शुरू हुई यात्रा, आज 20,000+ किसानों की पहचान</p>
-      <p>Dr. Sharvan Kumar Yadav holds a <strong>Ph.D. in Agronomy with specialization in Organic Farming</strong> from Maharana Pratap University of Agriculture & Technology (MPUAT), Udaipur. He worked as Senior Research Fellow at ICAR's All India Network Project on Organic Farming for 15+ years.</p>
-      <p>His father's cancer — caused by chemical-laden food — became the turning point. During the 2020 lockdown, Dr. Sharvan started with just <strong>17 vermicompost beds</strong>. Today, his 5-hectare farm at Sundarpura, Jaipur runs <strong>2500–2800 beds</strong>, producing 1500 tonnes per year.</p>
-      <p>He holds <strong>ASRB NET, ICAR JRF & SRF qualifications</strong> and has been mentored by Dr. S.K. Sharma, ADG (HRM), ICAR. His startup story was published by ICAR as a model for farmer innovation.</p>
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot">📚</div>
-          <div class="tl-content">
-            <div class="tl-year">2012</div>
-            <div class="tl-text">MSc Organic Farming with JRF scholarship, Karnataka. Left MNC job in 6 months to follow organic mission.</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot">🎓</div>
-          <div class="tl-content">
-            <div class="tl-year">2018</div>
-            <div class="tl-text">Ph.D. completed. Joined ICAR as Senior Research Fellow at MPUAT Udaipur.</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot">🌱</div>
-          <div class="tl-content">
-            <div class="tl-year">2020</div>
-            <div class="tl-text">Started Dr. Organic Vermicompost Farm during lockdown with 17 beds at Sundarpura, Jaipur.</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot">🏆</div>
-          <div class="tl-content">
-            <div class="tl-year">2026</div>
-            <div class="tl-text">Crop Icon Award 2026 — Organic Innovation & Technology. 2800 beds. 20,000+ farmers trained.</div>
-          </div>
-        </div>
-      </div>
-      <div class="awards-grid">
-        <div class="award-item">🏆 Crop Icon Award 2026</div>
-        <div class="award-item">🌾 Best Organic Farmer — Rajasthan CM</div>
-        <div class="award-item">🔬 ICAR Startup Story Feature</div>
-        <div class="award-item">📱 145K+ Instagram Followers</div>
-        <div class="award-item">🇮🇳 10 National Awards</div>
-        <div class="award-item">✅ MIONP 2.0 Recognized</div>
-      </div>
-    </div>
+<!-- ORGANIC FARMING 3D -->
+<section id="farming-sec" class="sec">
+  <div class="farming-intro rev">
+    <div class="sec-eyebrow">What We Grow & Create</div>
+    <h2 class="sec-h serif" style="color:var(--cream);text-align:center">Organic Farming.<br><em style="color:var(--sprout)">The Right Way.</em></h2>
+    <p class="sec-hi hi" style="text-align:center">जैविक खेती — प्रकृति के साथ, रसायन के बिना</p>
+    <p style="font-size:14px;color:rgba(245,237,216,.5);line-height:1.8;text-align:center">Hover each panel to explore. Every product rooted in 15 years of ICAR research.</p>
   </div>
-</div>
-
-<!-- FARM INFO -->
-<section class="farm-section">
-  <div class="section-wrap">
-    <div class="farm-grid">
-      <div class="reveal">
-        <div class="farm-img-wrap">
-          <img id="farmImg" src="" alt="Dr. Organic Farm aerial view — 2800 beds">
-          <div class="farm-img-overlay"></div>
-          <div class="farm-img-caption">
-            <strong>Aerial View — Our Farm</strong>
-            Village Sundarpura, Kishangarh Renwal, Tehsil Phulera, Rajasthan - 303602
-          </div>
-        </div>
-      </div>
-      <div class="reveal">
-        <div class="section-label">Farm Details / फ़ार्म की जानकारी</div>
-        <h2 class="section-h serif" style="color:var(--cream)">One of India's Largest Vermicompost Units</h2>
-        <p class="section-hi hindi">5 हेक्टेयर में फैला — राजस्थान का सबसे बड़ा जैविक फ़ार्म</p>
-        <div class="farm-info-cards">
-          <div class="fic">
-            <span class="fic-icon">📐</span>
-            <span class="fic-num">5 Hectare</span>
-            <span class="fic-lbl">Farm Area</span>
-            <div class="fic-desc">Sandy loam soil, ideal for vermicomposting and crop diversification</div>
-          </div>
-          <div class="fic">
-            <span class="fic-icon">🛏️</span>
-            <span class="fic-num">2800</span>
-            <span class="fic-lbl">Active Beds</span>
-            <div class="fic-desc">Above-ground, underground, HDPE, flour-based & windrow systems</div>
-          </div>
-          <div class="fic">
-            <span class="fic-icon">📦</span>
-            <span class="fic-num">1500T/yr</span>
-            <span class="fic-lbl">Annual Capacity</span>
-            <div class="fic-desc">Premium quality — pure cow dung, scientific management</div>
-          </div>
-          <div class="fic">
-            <span class="fic-icon">🪱</span>
-            <span class="fic-num">2000/kg</span>
-            <span class="fic-lbl">Earthworm Density</span>
-            <div class="fic-desc">Eisenia fetida — India's highest. Others give only 400–500/kg</div>
-          </div>
-          <div class="fic">
-            <span class="fic-icon">🌾</span>
-            <span class="fic-num">10+ Crops</span>
-            <span class="fic-lbl">Grown on Farm</span>
-            <div class="fic-desc">Pearl millet, mustard, lemon, Thai apple ber, Malabar neem, sugarbeet & more</div>
-          </div>
-          <div class="fic">
-            <span class="fic-icon">🐐</span>
-            <span class="fic-num">Goat Unit</span>
-            <span class="fic-lbl">+ Goat Enterprise</span>
-            <div class="fic-desc">Integrated farming model for maximum circular economy</div>
-          </div>
-        </div>
+  <div class="farm-grid">
+    <div class="f3d">
+      <div class="f3d-cw"><canvas id="c-farming"></canvas></div>
+      <div class="f3d-info">
+        <span class="f3d-tag">The Foundation</span>
+        <div class="f3d-name serif">Organic Farming</div>
+        <div class="f3d-hi hi">जैविक खेती</div>
+        <div class="f3d-desc">Organic farming replaces synthetic chemicals with nature's own tools — compost, earthworms, crop rotation, and biodiversity. Dr. Sharvan's 5-hectare farm at Sundarpura grows pearl millet, mustard, lemon, Thai apple ber, Malabar neem, sugarbeet, bottle gourd and more — 100% chemical-free. Healthier soil, safer food, richer ecosystem.</div>
+        <a class="f3d-cta" href="about.html">Learn More →</a>
       </div>
     </div>
-
-    <div style="margin-top:3rem;" class="reveal">
-      <div class="section-label" style="color:var(--sprout)">Products We Make / हम क्या बनाते हैं</div>
-      <h3 class="serif" style="color:var(--cream);font-size:1.5rem;margin-bottom:1.5rem;">Organic Inputs Prepared at the Farm</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;">
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(126,184,58,0.2);border-radius:8px;padding:1rem;text-align:center;">
-          <div style="font-size:2rem;margin-bottom:6px;">🪱</div>
-          <div style="color:var(--cream);font-weight:700;font-size:13px;">Vermicompost</div>
-          <div style="color:var(--wheat);font-size:11px;margin-top:3px;" class="hindi">वर्मीकम्पोस्ट</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(126,184,58,0.2);border-radius:8px;padding:1rem;text-align:center;">
-          <div style="font-size:2rem;margin-bottom:6px;">💧</div>
-          <div style="color:var(--cream);font-weight:700;font-size:13px;">Vermiwash</div>
-          <div style="color:var(--wheat);font-size:11px;margin-top:3px;" class="hindi">वर्मीवाश</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(126,184,58,0.2);border-radius:8px;padding:1rem;text-align:center;">
-          <div style="font-size:2rem;margin-bottom:6px;">🌿</div>
-          <div style="color:var(--cream);font-weight:700;font-size:13px;">Jeevamrit</div>
-          <div style="color:var(--wheat);font-size:11px;margin-top:3px;" class="hindi">जीवामृत</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(126,184,58,0.2);border-radius:8px;padding:1rem;text-align:center;">
-          <div style="font-size:2rem;margin-bottom:6px;">🌱</div>
-          <div style="color:var(--cream);font-weight:700;font-size:13px;">Beejamrit</div>
-          <div style="color:var(--wheat);font-size:11px;margin-top:3px;" class="hindi">बीजामृत</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(126,184,58,0.2);border-radius:8px;padding:1rem;text-align:center;">
-          <div style="font-size:2rem;margin-bottom:6px;">🐄</div>
-          <div style="color:var(--cream);font-weight:700;font-size:13px;">Panchagavya</div>
-          <div style="color:var(--wheat);font-size:11px;margin-top:3px;" class="hindi">पंचगव्य</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(126,184,58,0.2);border-radius:8px;padding:1rem;text-align:center;">
-          <div style="font-size:2rem;margin-bottom:6px;">🌾</div>
-          <div style="color:var(--cream);font-weight:700;font-size:13px;">Neemastra</div>
-          <div style="color:var(--wheat);font-size:11px;margin-top:3px;" class="hindi">नीमास्त्र</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(126,184,58,0.2);border-radius:8px;padding:1rem;text-align:center;">
-          <div style="font-size:2rem;margin-bottom:6px;">💊</div>
-          <div style="color:var(--cream);font-weight:700;font-size:13px;">VC Pellets</div>
-          <div style="color:var(--wheat);font-size:11px;margin-top:3px;" class="hindi">वर्मी पेलेट</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(126,184,58,0.2);border-radius:8px;padding:1rem;text-align:center;">
-          <div style="font-size:2rem;margin-bottom:6px;">🐛</div>
-          <div style="color:var(--cream);font-weight:700;font-size:13px;">Live Earthworms</div>
-          <div style="color:var(--wheat);font-size:11px;margin-top:3px;" class="hindi">जीवित केंचुए</div>
-        </div>
+    <div class="f3d">
+      <div class="f3d-cw"><canvas id="c-vc"></canvas></div>
+      <div class="f3d-info">
+        <span class="f3d-tag">The Gold Standard</span>
+        <div class="f3d-name serif">Vermicompost</div>
+        <div class="f3d-hi hi">वर्मीकम्पोस्ट — मिट्टी का सोना</div>
+        <div class="f3d-desc">Vermicompost is organic matter digested by Eisenia fetida earthworms — producing a dark, crumbly fertiliser with 5x more nutrients than regular compost. Rich in NPK, humic acid, plant growth hormones, and billions of beneficial microbes. Dr. Organic produces 1500 tonnes/year from 2800 beds — ICAR-tested, zero adulteration. Boosts crop yield 30–50%.</div>
+        <a class="f3d-cta" href="products.html">Order Now →</a>
       </div>
-      <div style="margin-top:1.5rem;">
-        <a class="btn-green" href="products.html">View All Products & Prices →</a>
+    </div>
+    <div class="f3d">
+      <div class="f3d-cw"><canvas id="c-worm"></canvas></div>
+      <div class="f3d-info">
+        <span class="f3d-tag">India's Highest Density</span>
+        <div class="f3d-name serif">Earthworms</div>
+        <div class="f3d-hi hi">केंचुआ — धरती का इंजीनियर</div>
+        <div class="f3d-desc">Earthworms are soil's engineers — aerating, decomposing, releasing nutrients and secreting growth hormones. Dr. Organic supplies 2000 Eisenia fetida earthworms per kg — India's highest density. Other suppliers give 400–500/kg. Active, healthy, farm-bred. Perfect for starting your own vermicompost unit or improving farm soil biology.</div>
+        <a class="f3d-cta" href="products.html">Buy Earthworms →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TRAINING PREVIEW -->
-<section class="training-section">
-  <div class="section-wrap">
-    <div class="section-label">Training / प्रशिक्षण</div>
-    <h2 class="section-h serif">Learn from India's Vermicompost Expert</h2>
-    <p class="section-hi hindi">Dr. Organic के साथ खुद की यूनिट शुरू करें — 10×3 फ़ीट में ₹50,000/माह</p>
+<!-- SCROLL STORY -->
+<section id="scroll-story">
+  <div class="story-sticky" id="storySticky">
+    <canvas id="storyCanvas"></canvas>
+    <div class="story-panels" id="storyPanels">
+      <div class="sp active" id="sp0">
+        <div class="sp-num">01</div>
+        <span class="sp-tag">Vermiwash / वर्मीवाश</span>
+        <h3 class="sp-h serif">Liquid Gold<br><em style="color:var(--sprout)">for Your Plants</em></h3>
+        <p class="sp-hi hi">पौधों का अमृत — तरल जैव उर्वरक</p>
+        <p class="sp-desc">Vermiwash is the liquid that drips through vermicompost beds — nature's most potent plant tonic. Rich in enzymes, growth hormones, and beneficial bacteria. Dilute 1:10 with water and spray on leaves or pour into soil. Works as natural pesticide, fungicide and growth promoter — all in one solution.</p>
+        <div class="sp-stats"><div><span class="sp-snum">1:10</span><span class="sp-slbl">Dilution ratio</span></div><div><span class="sp-snum">100%</span><span class="sp-slbl">Chemical free</span></div></div>
+      </div>
+      <div class="sp right" id="sp1">
+        <div class="sp-num">02</div>
+        <span class="sp-tag">Jeevamrit & Beejamrit</span>
+        <h3 class="sp-h serif">Ancient Wisdom,<br><em style="color:var(--lime)">Modern Science</em></h3>
+        <p class="sp-hi hi">जीवामृत और बीजामृत — वैदिक कृषि विज्ञान</p>
+        <p class="sp-desc">Jeevamrit is a fermented biostimulant from cow dung, urine, gram flour, jaggery and soil — activating trillions of soil microbes overnight. Beejamrit is an organic seed treatment that protects seeds from soil-borne diseases and improves germination rate up to 30%. Dr. Sharvan prepares these fresh on the farm using time-tested and science-validated methods.</p>
+        <div class="sp-stats"><div><span class="sp-snum">10B+</span><span class="sp-slbl">Microbes per ml</span></div><div><span class="sp-snum">30%</span><span class="sp-slbl">Better germination</span></div></div>
+      </div>
+      <div class="sp" id="sp2">
+        <div class="sp-num">03</div>
+        <span class="sp-tag">Panchagavya & Neemastra</span>
+        <h3 class="sp-h serif">Cow-Based<br><em style="color:var(--gold)">Organic Power</em></h3>
+        <p class="sp-hi hi">पंचगव्य और नीमास्त्र — गोधन की शक्ति</p>
+        <p class="sp-desc">Panchagavya blends 5 sacred cow-derived products (dung, urine, milk, curd, ghee) into a powerful plant immunity booster and yield enhancer. Neemastra uses neem-based compounds as 100% organic pesticide that repels harmful insects without affecting beneficial organisms. Together they form a complete organic crop protection system.</p>
+        <div class="sp-stats"><div><span class="sp-snum">5</span><span class="sp-slbl">Cow products</span></div><div><span class="sp-snum">0%</span><span class="sp-slbl">Chemical toxins</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-spacer"></div>
+</section>
 
-    <div class="training-photos-row reveal">
-      <div class="training-photo">
-        <img id="train1Img" src="" alt="Training session at Dr. Organic Farm">
-        <div class="training-photo-label">🎓 Batch Training — 500+ Attendees</div>
+<!-- PRODUCTS -->
+<section id="products-sec" class="sec">
+  <div class="sec-inner">
+    <div class="rev">
+      <div class="sec-eyebrow">Products / उत्पाद</div>
+      <h2 class="sec-h serif" style="color:var(--cream)">Pure. Potent.<br><em style="color:var(--sprout)">Organic.</em></h2>
+      <p class="sec-hi hi">सीधे खेत से — ICAR प्रमाणित गुणवत्ता</p>
+    </div>
+    <div class="prod-grid">
+      <div class="prod-card rev">
+        <div class="prod-cw"><canvas id="pc1"></canvas></div>
+        <div class="prod-body">
+          <div class="prod-tag">Best Seller</div>
+          <div class="prod-name serif">Premium Vermicompost</div>
+          <div class="prod-hi hi">प्रीमियम वर्मीकम्पोस्ट</div>
+          <div class="prod-desc">Dark, crumbly, nutrient-rich compost from pure cow dung. Tested quality, zero soil mixing. 30–50% yield boost.</div>
+          <div class="prod-tags"><span class="ptag">ICAR Tested</span><span class="ptag">30–50% Yield+</span><span class="ptag">PAN India Delivery</span></div>
+          <a class="prod-wa" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20buy%20Vermicompost." target="_blank">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Order on WhatsApp
+          </a>
+        </div>
       </div>
-      <div class="training-photo">
-        <img id="train2Img" src="" alt="Farmers learning at the farm">
-        <div class="training-photo-label">👨‍🌾 Practical Farm Learning</div>
+      <div class="prod-card rev" style="transition-delay:.1s">
+        <div class="prod-cw"><canvas id="pc2"></canvas></div>
+        <div class="prod-body">
+          <div class="prod-tag">India's Highest Density</div>
+          <div class="prod-name serif">Live Earthworms</div>
+          <div class="prod-hi hi">जीवित केंचुए — 2000/किलो</div>
+          <div class="prod-desc">Eisenia fetida — 2000 worms/kg. 4x more than any other supplier. Active, healthy, farm-bred.</div>
+          <div class="prod-tags"><span class="ptag">2000/kg</span><span class="ptag">Safe Packaging</span><span class="ptag">Post-sale Support</span></div>
+          <a class="prod-wa" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20buy%20live%20earthworms." target="_blank">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Order on WhatsApp
+          </a>
+        </div>
+      </div>
+      <div class="prod-card rev" style="transition-delay:.2s">
+        <div class="prod-cw"><canvas id="pc3"></canvas></div>
+        <div class="prod-body">
+          <div class="prod-tag">Liquid Gold</div>
+          <div class="prod-name serif">Vermiwash</div>
+          <div class="prod-hi hi">वर्मीवाश — तरल जैव उर्वरक</div>
+          <div class="prod-desc">Nature's most potent liquid plant tonic. Pesticide + fungicide + growth promoter. Dilute 1:10 and spray.</div>
+          <div class="prod-tags"><span class="ptag">Foliar Spray</span><span class="ptag">Pest Repellent</span><span class="ptag">Growth Booster</span></div>
+          <a class="prod-wa" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20buy%20Vermiwash." target="_blank">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Order on WhatsApp
+          </a>
+        </div>
       </div>
     </div>
+    <div style="text-align:center;margin-top:2.5rem" class="rev"><a class="btn-p" href="products.html">View All Products →</a></div>
+  </div>
+</section>
 
-    <div class="training-cards">
-      <div class="tc reveal">
-        <span class="tc-icon">📅</span>
-        <div class="tc-name serif">1-Day Farm Visit</div>
-        <div class="tc-name-hi hindi">1 दिवसीय प्रशिक्षण</div>
-        <div class="tc-desc">Visit Sundarpura Farm, Jaipur. Learn complete A-to-Z vermicompost setup, earthworm management, harvesting & marketing in one day.</div>
-        <div class="tc-price">FREE 🎁 <small>No charges ever</small></div>
-        <ul class="tc-features">
-          <li>Practical hands-on learning</li>
-          <li>All input materials provided</li>
-          <li>Q&A with Dr. Sharvan ji</li>
-          <li>Certificate of Participation</li>
-        </ul>
-        <a class="tc-register" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20register%20for%20the%201-day%20farm%20visit%20training." target="_blank">
-          📱 Register on WhatsApp
-        </a>
+<!-- FOUNDER -->
+<section id="founder-sec" class="sec">
+  <div class="sec-inner">
+    <div class="founder-grid">
+      <div style="position:relative" class="rev-l">
+        <div class="founder-frame"><img id="founderMainImg" src="" alt="Dr. Sharvan Kumar Yadav"><div class="founder-cap"><div class="fcap-name">Dr. Sharvan Kumar Yadav</div><div class="fcap-title">Ph.D. Agronomy · ICAR Senior Research Fellow</div></div></div>
+        <div class="founder-badge"><span class="fb-num">10+</span><span class="fb-lbl">National Awards</span></div>
       </div>
-      <div class="tc reveal">
-        <span class="tc-icon">💻</span>
-        <div class="tc-name serif">Online Video Course</div>
-        <div class="tc-name-hi hindi">ऑनलाइन वीडियो कोर्स</div>
-        <div class="tc-desc">Complete vermicompost business course. Learn from home at your own pace. Hindi & English both available.</div>
-        <div class="tc-price">₹999 <small>Lifetime Access</small></div>
-        <ul class="tc-features">
-          <li>Live doubt clearing sessions</li>
-          <li>Private WhatsApp group access</li>
-          <li>Hindi + English language</li>
-          <li>Business setup guidance</li>
-        </ul>
-        <a class="tc-register" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20enroll%20in%20the%20online%20vermicompost%20course." target="_blank">
-          📱 Enroll via WhatsApp
-        </a>
-      </div>
-      <div class="tc reveal">
-        <span class="tc-icon">🤝</span>
-        <div class="tc-name serif">Start Your Own Unit</div>
-        <div class="tc-name-hi hindi">खुद की यूनिट शुरू करें</div>
-        <div class="tc-desc">10×3 ft space is enough. We supply earthworms, train you completely, and guide you until your unit earns ₹50,000/month.</div>
-        <div class="tc-price">Full Support <small>End-to-end guidance</small></div>
-        <ul class="tc-features">
-          <li>Earthworm supply included</li>
-          <li>Setup guidance on-site</li>
-          <li>Marketing & sales support</li>
-          <li>Ongoing WhatsApp mentorship</li>
-        </ul>
-        <a class="tc-register" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20start%20my%20own%20vermicompost%20unit%20with%20your%20guidance." target="_blank">
-          📱 Start Now via WhatsApp
-        </a>
+      <div class="rev-r">
+        <div class="sec-eyebrow">Our Founder</div>
+        <h2 class="sec-h serif" style="color:var(--cream)">From ICAR Lab to<br><em style="color:var(--sprout)">India's Largest Unit</em></h2>
+        <p class="sec-hi hi">एक वैज्ञानिक जिसने ज़मीन पर उतरकर भारत की खेती बदल दी</p>
+        <p class="founder-text">Dr. Sharvan Kumar Yadav holds a Ph.D. in Agronomy (Organic Farming) from MPUAT, Udaipur. He worked as Senior Research Fellow at ICAR for 15+ years. During the 2020 lockdown, he left research to start with just 17 vermicompost beds at Sundarpura, Jaipur.</p>
+        <p class="founder-text">His father's cancer from chemical farming became his mission. Today his 5-hectare farm runs 2800 beds, produces 1500 tonnes/year, and has trained 20,000+ farmers — all free.</p>
+        <div class="founder-quote"><div class="fq-text">"My goal was to give good organic manure to farmers across the country, so that more people join organic farming."</div></div>
+        <div class="f-awards"><span class="faw">🏆 Crop Icon 2026</span><span class="faw">🌾 Rajasthan CM Award</span><span class="faw">📰 ICAR Publication</span><span class="faw">📱 145K Instagram</span><span class="faw">✅ ASRB NET</span><span class="faw">🔬 ICAR JRF & SRF</span></div>
+        <div style="margin-top:1.8rem;display:flex;gap:1rem;flex-wrap:wrap"><a class="btn-p" href="about.html">Full Story →</a><a href="https://wa.me/916377544290" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--sprout);border:1px solid rgba(120,184,50,.35);padding:14px 24px;border-radius:6px;font-size:14px;text-decoration:none;transition:all .2s">💬 WhatsApp</a></div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:2rem;">
-      <a class="btn-green" href="training.html">View All Training Programs →</a>
+  </div>
+</section>
+
+<!-- TRAINING -->
+<section id="training-sec" class="sec">
+  <div class="sec-inner">
+    <div class="rev"><div class="sec-eyebrow">Training / प्रशिक्षण</div><h2 class="sec-h serif" style="color:var(--cream)">Learn. Earn.<br><em style="color:var(--lime)">Grow.</em></h2><p class="sec-hi hi">Dr. Organic के साथ — 10×3 ft में ₹50,000/माह कमाएं</p></div>
+    <div class="tp-grid rev">
+      <div class="tp-item"><img id="tpImg1" src="" alt="Training"><div class="tp-ov"><div><span class="tp-name">Mega Training Batch</span><span class="tp-sub">500+ farmers per session</span></div></div></div>
+      <div class="tp-item"><img id="tpImg2" src="" alt="Practical"><div class="tp-ov"><div><span class="tp-name">Hands-on Learning</span><span class="tp-sub">At actual vermicompost beds</span></div></div></div>
     </div>
+    <div class="tc-grid">
+      <div class="tc2 rev"><span class="tc2-icon">📅</span><div class="tc2-price">FREE</div><div class="tc2-name serif">1-Day Farm Visit</div><div class="tc2-hi hi">1 दिवसीय प्रशिक्षण</div><div class="tc2-desc">Visit Sundarpura Farm, Jaipur. Full A-to-Z vermicompost training in one day.</div><ul class="tc2-ul"><li>Practical hands-on learning</li><li>Certificate issued</li><li>Q&A with Dr. Sharvan ji</li><li>No charges, ever</li></ul><a class="tc2-wa" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20register%20for%20farm%20training." target="_blank">📱 Register Free</a></div>
+      <div class="tc2 rev" style="transition-delay:.1s"><span class="tc2-icon">💻</span><div class="tc2-price">₹999</div><div class="tc2-name serif">Online Course</div><div class="tc2-hi hi">ऑनलाइन वीडियो कोर्स</div><div class="tc2-desc">Complete vermicompost business course. Lifetime access from home.</div><ul class="tc2-ul"><li>Lifetime video access</li><li>Live doubt sessions</li><li>WhatsApp group support</li><li>Hindi + English</li></ul><a class="tc2-wa" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20enroll%20in%20online%20course%20for%20%E2%82%B9999." target="_blank">📱 Enroll Now</a></div>
+      <div class="tc2 rev" style="transition-delay:.2s"><span class="tc2-icon">🤝</span><div class="tc2-price">Full Support</div><div class="tc2-name serif">Start Your Own Unit</div><div class="tc2-hi hi">खुद की यूनिट शुरू करें</div><div class="tc2-desc">10×3 ft space is enough. Earthworms + training + guidance until ₹50K/month.</div><ul class="tc2-ul"><li>Earthworm supply included</li><li>Setup guidance</li><li>Marketing help</li><li>Ongoing mentorship</li></ul><a class="tc2-wa" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%2C%20I%20want%20to%20start%20my%20own%20vermicompost%20unit." target="_blank">📱 Get Started</a></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem" class="rev"><a class="btn-p" href="training.html">View All Programs →</a></div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
-<div class="testimonials-section">
-  <div class="section-wrap">
-    <div class="section-label">Testimonials / किसान क्या कहते हैं</div>
-    <h2 class="section-h serif">Trusted by 20,000+ Farmers Across India</h2>
-    <p class="section-hi hindi">देश के कोने-कोने से किसान भाइयों की राय</p>
-    <div class="testimonials-grid">
-      <div class="test-card reveal">
-        <div class="test-rating">★★★★★</div>
-        <div class="test-text">"Dr. Sharvan ji ki free training ke baad maine apna unit lagaya. Sirf 6 mahine mein ₹40,000/month kama raha hoon. Yeh adbhut hai!"</div>
-        <div class="test-author">Ramesh Patidar</div>
-        <div class="test-from">Indore, Madhya Pradesh</div>
-        <span class="test-crop">🌾 Wheat Farmer</span>
-      </div>
-      <div class="test-card reveal">
-        <div class="test-rating">★★★★★</div>
-        <div class="test-text">"Mere tomato crop ka yield 40% badh gaya sirf vermicompost use karne ke baad. Quality aur flavor bhi kafi improve hua. Highly recommended!"</div>
-        <div class="test-author">Sukhdev Singh</div>
-        <div class="test-from">Ludhiana, Punjab</div>
-        <span class="test-crop">🍅 Vegetable Farmer</span>
-      </div>
-      <div class="test-card reveal">
-        <div class="test-rating">★★★★★</div>
-        <div class="test-text">"Free training dena bahut bada kaam hai. Hamara poora gaon ab organic farming ki taraf shift ho raha hai. Dr. Sahab ka dil bahut bada hai."</div>
-        <div class="test-author">Meena Bai Yadav</div>
-        <div class="test-from">Barmer, Rajasthan</div>
-        <span class="test-crop">🌱 Organic Farmer</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MEDIA COVERAGE -->
-<section class="media-section">
-  <div class="section-wrap">
-    <div class="section-label">Media Coverage / मीडिया में</div>
-    <h2 class="section-h serif">Featured In</h2>
-    <div class="media-logos">
-      <div class="media-logo">📰 Krishi Jagran</div>
-      <div class="media-logo">📰 Kisan of India</div>
-      <div class="media-logo">📰 NewsDay Express</div>
-      <div class="media-logo">📰 The Logically</div>
-      <div class="media-logo">🎬 ICAR Publications</div>
-      <div class="media-logo">📺 YouTube — 1M+ Views</div>
-      <div class="media-logo">📱 Instagram 145K+ Followers</div>
+<section id="testimonials-sec" class="sec">
+  <div class="sec-inner rev"><div class="sec-eyebrow">Testimonials</div><h2 class="sec-h serif" style="color:var(--cream)">20,000+ Farmers<br><em style="color:var(--sprout)">Can't Be Wrong</em></h2><p class="sec-hi hi">देश के कोने-कोने से किसान भाइयों की राय</p></div>
+  <div class="test-wrap">
+    <div class="test-marquee">
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"Dr. Sharvan ji ki free training ke baad apni unit lagayi. 6 mahine mein ₹42,000/month kama raha hoon!"</div><div class="tcard-author">Ramesh Patidar</div><div class="tcard-from">Indore, Madhya Pradesh 🌾</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"Tomato yield 40% badh gaya vermicompost se. Quality aur flavor bhi kafi improve hua. Shukriya!"</div><div class="tcard-author">Sukhdev Singh</div><div class="tcard-from">Ludhiana, Punjab 🍅</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"Free training aur itna support — hamara poora gaon organic farming ki taraf shift ho raha hai."</div><div class="tcard-author">Meena Bai Yadav</div><div class="tcard-from">Barmer, Rajasthan 🌱</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"2000 earthworms per kg — no other supplier gives this. My unit is thriving because of Dr. Organic."</div><div class="tcard-author">Pradeep Kumar</div><div class="tcard-from">Varanasi, Uttar Pradesh 🪱</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"10×3 ft mein unit lagayi — aaj ₹35,000/month earn kar raha hoon. Life change ho gayi!"</div><div class="tcard-author">Ganesh Meena</div><div class="tcard-from">Tonk, Rajasthan 💰</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"ICAR research backed product — wheat yield 35% increased in first season. Outstanding quality!"</div><div class="tcard-author">Dr. Vikram Singh</div><div class="tcard-from">Jaipur, Rajasthan 🏆</div></div>
+      <!-- duplicates for loop -->
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"Dr. Sharvan ji ki free training ke baad apni unit lagayi. 6 mahine mein ₹42,000/month kama raha hoon!"</div><div class="tcard-author">Ramesh Patidar</div><div class="tcard-from">Indore, Madhya Pradesh 🌾</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"Tomato yield 40% badh gaya vermicompost se. Quality aur flavor bhi kafi improve hua. Shukriya!"</div><div class="tcard-author">Sukhdev Singh</div><div class="tcard-from">Ludhiana, Punjab 🍅</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"Free training aur itna support — hamara poora gaon organic farming ki taraf shift ho raha hai."</div><div class="tcard-author">Meena Bai Yadav</div><div class="tcard-from">Barmer, Rajasthan 🌱</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"2000 earthworms per kg — no other supplier gives this. My unit is thriving because of Dr. Organic."</div><div class="tcard-author">Pradeep Kumar</div><div class="tcard-from">Varanasi, Uttar Pradesh 🪱</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"10×3 ft mein unit lagayi — aaj ₹35,000/month earn kar raha hoon. Life change ho gayi!"</div><div class="tcard-author">Ganesh Meena</div><div class="tcard-from">Tonk, Rajasthan 💰</div></div>
+      <div class="tcard"><div class="tcard-stars">★★★★★</div><div class="tcard-text">"ICAR research backed product — wheat yield 35% increased in first season. Outstanding quality!"</div><div class="tcard-author">Dr. Vikram Singh</div><div class="tcard-from">Jaipur, Rajasthan 🏆</div></div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT CTA -->
-<section class="contact-section">
-  <div class="section-wrap">
-    <div class="contact-grid">
-      <div class="reveal">
-        <div class="section-label">Contact / सम्पर्क करें</div>
-        <h2 class="section-h serif">Get in Touch with Dr. Sharvan</h2>
-        <p class="section-hi hindi">आज ही सम्पर्क करें — खाद खरीदें, प्रशिक्षण लें या अपनी यूनिट शुरू करें</p>
-        <div class="contact-info">
-          <div class="ci-item">
-            <div class="ci-icon">📍</div>
-            <div>
-              <span class="ci-label">Farm Address</span>
-              <span class="ci-value">Village Sundarpura, Kishangarh Renwal<br>Tehsil Phulera, Jaipur, Rajasthan — 303602</span>
-            </div>
-          </div>
-          <div class="ci-item">
-            <div class="ci-icon">📞</div>
-            <div>
-              <span class="ci-label">Phone & WhatsApp</span>
-              <span class="ci-value">
-                <a href="tel:+917976996775">+91 7976996775</a> &nbsp;·&nbsp;
-                <a href="tel:+916377544290">+91 6377-544290</a>
-              </span>
-            </div>
-          </div>
-          <div class="ci-item">
-            <div class="ci-icon">✉️</div>
-            <div>
-              <span class="ci-label">Email</span>
-              <span class="ci-value"><a href="mailto:sharvan5825@gmail.com">sharvan5825@gmail.com</a></span>
-            </div>
-          </div>
-        </div>
-        <div class="social-btns">
-          <a class="social-btn sb-wa" href="https://wa.me/916377544290" target="_blank">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp
-          </a>
-          <a class="social-btn sb-yt" href="https://www.youtube.com/@dr.organicfarming1467" target="_blank">▶ YouTube</a>
-          <a class="social-btn sb-ig" href="https://www.instagram.com/dr_sharvan_yadav/" target="_blank">📸 Instagram</a>
-          <a class="social-btn sb-fb" href="https://www.facebook.com/p/Dr-Organic-Vermicompst-Farm-100064180596347/" target="_blank">f Facebook</a>
-        </div>
+<!-- AWARDS -->
+<section id="awards-sec" class="sec">
+  <div class="sec-inner">
+    <div class="rev"><div class="sec-eyebrow">Awards / पुरस्कार</div><h2 class="sec-h serif" style="color:var(--cream)">10+ National<br><em style="color:var(--gold)">Recognitions</em></h2><p class="sec-hi hi">राष्ट्रीय स्तर पर सम्मानित — भारत के शीर्ष जैविक किसान</p></div>
+    <div class="awards-grid">
+      <div class="rev-l">
+        <div class="award-cert"><img id="awardImg" src="" alt="Crop Icon Award 2026"></div>
+        <div class="award-cert-cap"><h4>Crop Icon Award 2026 — Organic Innovation & Technology</h4><p>MIONP 2.0 · Krishi Jagran & Agriculture World · GNFSU</p></div>
       </div>
-      <div class="contact-form-box reveal">
-        <div class="cf-title serif">Send an Enquiry / पूछताछ करें</div>
-        <div class="cf-grid2">
-          <div class="cf-row">
-            <label class="cf-label">Name / नाम *</label>
-            <input class="cf-input" type="text" id="cf_name" placeholder="Your full name">
-          </div>
-          <div class="cf-row">
-            <label class="cf-label">WhatsApp Number *</label>
-            <input class="cf-input" type="tel" id="cf_phone" placeholder="+91 XXXXXXXXXX">
-          </div>
-        </div>
-        <div class="cf-row">
-          <label class="cf-label">State / राज्य</label>
-          <input class="cf-input" type="text" id="cf_state" placeholder="e.g. Rajasthan, UP, Punjab...">
-        </div>
-        <div class="cf-row">
-          <label class="cf-label">I am interested in / मुझे चाहिए *</label>
-          <select class="cf-select" id="cf_interest">
-            <option value="vermicompost">Buying Vermicompost / वर्मीकम्पोस्ट खरीदना</option>
-            <option value="earthworms">Buying Live Earthworms / केंचुआ खरीदना</option>
-            <option value="vermiwash">Buying Vermiwash / वर्मीवाश</option>
-            <option value="farm_training">Farm Visit Training / खेत पर प्रशिक्षण</option>
-            <option value="online_course">Online Course / ऑनलाइन कोर्स</option>
-            <option value="own_unit">Starting Own Unit / खुद की यूनिट</option>
-            <option value="other">Other / अन्य</option>
-          </select>
-        </div>
-        <div class="cf-row">
-          <label class="cf-label">Message / संदेश</label>
-          <textarea class="cf-input" id="cf_message" rows="3" placeholder="Any specific questions..."></textarea>
-        </div>
-        <button class="cf-submit" onclick="sendWhatsAppEnquiry()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Send via WhatsApp
-        </button>
+      <div class="awards-list rev-r">
+        <div class="aw-item"><div class="aw-icon">🏆</div><div><div class="aw-name">Crop Icon Award — Organic Farming Icon</div><div class="aw-org">MIONP 2.0 · Krishi Jagran · GNFSU</div></div><div class="aw-year">2026</div></div>
+        <div class="aw-item"><div class="aw-icon">🌾</div><div><div class="aw-name">Best Organic Farmer Award</div><div class="aw-org">Rajasthan Chief Minister Ashok Gehlot</div></div><div class="aw-year">2022</div></div>
+        <div class="aw-item"><div class="aw-icon">📰</div><div><div class="aw-name">ICAR Farmer Innovator Feature</div><div class="aw-org">Published in ICAR Startup Stories</div></div><div class="aw-year">2024</div></div>
+        <div class="aw-item"><div class="aw-icon">🔬</div><div><div class="aw-name">ICAR SRF Research Excellence</div><div class="aw-org">All India Network Project on Organic Farming</div></div><div class="aw-year">2020</div></div>
+        <div class="aw-item"><div class="aw-icon">🏅</div><div><div class="aw-name">10 National Awards Total</div><div class="aw-org">Various national agriculture & innovation recognitions</div></div><div class="aw-year">2020+</div></div>
+        <div class="aw-item"><div class="aw-icon">📱</div><div><div class="aw-name">145K+ Social Media Following</div><div class="aw-org">Instagram @dr_sharvan_yadav · 1M+ YouTube views</div></div><div class="aw-year">2024</div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA -->
+<section id="media-sec" class="sec">
+  <div class="sec-inner rev"><div class="sec-eyebrow">Media Coverage</div><h2 class="sec-h serif" style="color:var(--cream)">Featured In</h2>
+  <div class="media-row"><div class="ml-item">📰 Krishi Jagran</div><div class="ml-item">📰 Kisan of India</div><div class="ml-item">📰 The Logically</div><div class="ml-item">📰 NewsDay Express</div><div class="ml-item">🎬 ICAR Publications</div><div class="ml-item">📺 YouTube 1M+ Views</div><div class="ml-item">📱 Instagram 145K+</div><div class="ml-item">🛒 Amazon & Flipkart</div></div></div>
+</section>
+
+<!-- CTA -->
+<section id="cta-sec">
+  <div class="rev">
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--sprout);margin-bottom:1rem"><div style="width:30px;height:1px;background:var(--sprout)"></div>Get In Touch<div style="width:30px;height:1px;background:var(--sprout)"></div></div>
+    <h2 class="sec-h serif" style="text-align:center;color:var(--cream)">Ready to Start<br><em style="color:var(--sprout)">Your Organic Journey?</em></h2>
+    <p class="cta-sub hi">आज ही Dr. Sharvan ji से बात करें — ऑर्डर, ट्रेनिंग या यूनिट के लिए</p>
+    <div class="cta-btns">
+      <a class="cta-wa" href="https://wa.me/916377544290?text=Namaste%20Dr.%20Sharvan%20ji%20%F0%9F%99%8F%0AI%20found%20your%20website%20and%20want%20to%20connect." target="_blank">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat on WhatsApp Now
+      </a>
+      <a class="btn-g" href="contact.html" style="padding:16px 36px">Send Enquiry →</a>
+    </div>
+    <div class="cta-info">
+      <div><span class="ci2-icon">📞</span><span class="ci2-lbl">Phone</span><div class="ci2-val"><a href="tel:+917976996775">7976996775</a> · <a href="tel:+916377544290">6377-544290</a></div></div>
+      <div><span class="ci2-icon">📍</span><span class="ci2-lbl">Farm</span><div class="ci2-val">Sundarpura, Phulera, Jaipur</div></div>
+      <div><span class="ci2-icon">✉️</span><span class="ci2-lbl">Email</span><div class="ci2-val"><a href="mailto:sharvan5825@gmail.com">sharvan5825@gmail.com</a></div></div>
+    </div>
+    <div class="social-row">
+      <a class="sr-btn sr-yt" href="https://www.youtube.com/@dr.organicfarming1467" target="_blank">▶ YouTube</a>
+      <a class="sr-btn sr-ig" href="https://www.instagram.com/dr_sharvan_yadav/" target="_blank">📸 Instagram</a>
+      <a class="sr-btn sr-fb" href="https://www.facebook.com/p/Dr-Organic-Vermicompst-Farm-100064180596347/" target="_blank">f Facebook</a>
+      <a class="sr-btn sr-li" href="https://www.linkedin.com/in/dr-sharvan-yadav-a22bbb219/" target="_blank">in LinkedIn</a>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.8rem;">
-        <div class="logo-icon">🌿</div>
-        <div class="logo-text-wrap">
-          <div class="logo-main">Dr. Organic Vermicompost Farm</div>
-          <div class="logo-sub">Est. 2020 · Jaipur, Rajasthan</div>
-        </div>
-      </div>
-      <p>India's most trusted vermicompost farm. Pure. Scientific. Organic. Serving farmers across the nation since 2020.</p>
-      <p style="margin-top:0.5rem;color:rgba(248,243,232,0.35);font-size:11px;">📧 sharvan5825@gmail.com</p>
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:.8rem"><div class="nav-logo-mark">🌿</div><div class="nav-logo-text"><b>Dr. Organic Vermicompost Farm</b><span>Est. 2020 · Jaipur, Rajasthan</span></div></div>
+      <p>India's most trusted vermicompost farm. Pure science-backed organic inputs since 2020.</p>
     </div>
-    <div class="footer-col">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Dr. Sharvan</a></li>
-        <li><a href="products.html">Products</a></li>
-        <li><a href="training.html">Training Programs</a></li>
-        <li><a href="gallery.html">Farm Gallery</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Products</h4>
-      <ul>
-        <li><a href="products.html">Vermicompost</a></li>
-        <li><a href="products.html">Live Earthworms</a></li>
-        <li><a href="products.html">Vermiwash</a></li>
-        <li><a href="products.html">Jeevamrit</a></li>
-        <li><a href="products.html">Panchagavya</a></li>
-        <li><a href="products.html">VC Pellets</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Connect</h4>
-      <ul>
-        <li><a href="https://www.youtube.com/@dr.organicfarming1467" target="_blank">▶ YouTube Channel</a></li>
-        <li><a href="https://www.instagram.com/dr_sharvan_yadav/" target="_blank">📸 Instagram</a></li>
-        <li><a href="https://www.facebook.com/p/Dr-Organic-Vermicompst-Farm-100064180596347/" target="_blank">f Facebook Page</a></li>
-        <li><a href="https://wa.me/916377544290" target="_blank">💬 WhatsApp</a></li>
-        <li><a href="https://www.linkedin.com/in/dr-sharvan-yadav-a22bbb219/" target="_blank">in LinkedIn</a></li>
-      </ul>
-    </div>
+    <div class="ft-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="products.html">Products</a></li><li><a href="training.html">Training</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="ft-col"><h4>Products</h4><ul><li><a href="products.html">Vermicompost</a></li><li><a href="products.html">Live Earthworms</a></li><li><a href="products.html">Vermiwash</a></li><li><a href="products.html">Jeevamrit</a></li><li><a href="products.html">Panchagavya</a></li></ul></div>
+    <div class="ft-col"><h4>Connect</h4><ul><li><a href="https://www.youtube.com/@dr.organicfarming1467" target="_blank">▶ YouTube</a></li><li><a href="https://www.instagram.com/dr_sharvan_yadav/" target="_blank">📸 Instagram 145K+</a></li><li><a href="https://www.facebook.com/p/Dr-Organic-Vermicompst-Farm-100064180596347/" target="_blank">f Facebook</a></li><li><a href="https://wa.me/916377544290" target="_blank">💬 WhatsApp</a></li></ul></div>
   </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2024 Dr. Organic Vermicompost Farm · Village Sundarpura, Kishangarh Renwal, Tehsil Phulera, Jaipur, Rajasthan — 303602</div>
-    <div class="footer-tagline serif">Heal the Soil. Feed the Nation. 🌱</div>
-  </div>
+  <div class="ft-bot"><div class="ft-copy">© 2024 Dr. Organic Vermicompost Farm · Village Sundarpura, Kishangarh Renwal, Phulera, Jaipur, Rajasthan — 303602</div><div class="ft-tag">Heal the Soil. Feed the Nation. 🌱</div></div>
 </footer>
 
 <script src="js/images.js"></script>
-<script>
-  // Load images from base64
-  window.addEventListener('load', function() {
-    if(typeof img_founder !== 'undefined') {
-      document.getElementById('founderImg').src = img_founder;
-      document.getElementById('founderBigImg').src = img_founder;
-    }
-    if(typeof img_farm !== 'undefined') document.getElementById('farmImg').src = img_farm;
-    if(typeof img_training1 !== 'undefined') document.getElementById('train1Img').src = img_training1;
-    if(typeof img_training2 !== 'undefined') document.getElementById('train2Img').src = img_training2;
-    if(typeof img_award !== 'undefined') document.getElementById('awardImg').src = img_award;
-    if(typeof img_icar !== 'undefined') document.getElementById('icarImg').src = img_icar;
-  });
-
-  // Nav scroll effect
-  window.addEventListener('scroll', function() {
-    const nav = document.getElementById('mainNav');
-    if(window.scrollY > 50) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
-  });
-
-  // Mobile nav toggle
-  function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('open');
-  }
-
-  // Scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if(entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  revealEls.forEach(el => observer.observe(el));
-
-  // Counter animation
-  function animateCounter(el, target) {
-    let start = 0;
-    const duration = 2000;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if(start >= target) { el.textContent = target.toLocaleString('en-IN') + '+'; clearInterval(timer); }
-      else el.textContent = Math.floor(start).toLocaleString('en-IN');
-    }, 16);
-  }
-  const heroObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        const el = entry.target.querySelector('[data-count]');
-        if(el) animateCounter(el, parseInt(el.dataset.count));
-        heroObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  const heroSection = document.querySelector('.hero');
-  if(heroSection) heroObserver.observe(heroSection);
-
-  // WhatsApp enquiry form
-  function sendWhatsAppEnquiry() {
-    const name = document.getElementById('cf_name').value || 'Not provided';
-    const phone = document.getElementById('cf_phone').value || 'Not provided';
-    const state = document.getElementById('cf_state').value || 'Not provided';
-    const interest = document.getElementById('cf_interest').options[document.getElementById('cf_interest').selectedIndex].text;
-    const message = document.getElementById('cf_message').value || '';
-    const text = `Namaste Dr. Sharvan ji 🙏\n\nNew Enquiry from Website:\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n📍 State: ${state}\n✅ Interested in: ${interest}${message ? '\n💬 Message: ' + message : ''}\n\nPlease guide me further.`;
-    window.open('https://wa.me/916377544290?text=' + encodeURIComponent(text), '_blank');
-  }
-</script>
+<script src="js/main.js"></script>
 </body>
 </html>
